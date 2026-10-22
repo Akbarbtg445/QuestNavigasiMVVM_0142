@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PAM 6</string>
     <string name="Submit">Submit</string>
+    <string name="back">Back</string>
 </resources>
