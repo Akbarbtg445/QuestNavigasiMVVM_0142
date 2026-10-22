@@ -1,31 +1,54 @@
 package com.example.pam6
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.pam6.view.FormIsian
+import com.example.pam6.view.TampilData
 
-enum class  Navigasi {
+enum class Navigasi {
     FormulirSaya,
     Detail
 }
+
 @Composable
 fun DataApp(
-    navcontroller: NavHostController = rememberNavController()
-){
-    Scaffold { isiRuang->
+    navController: NavHostController = rememberNavController()
+) {
+    Scaffold { isiRuang ->
         NavHost(
-            navController = navcontroller,
-            startDestination = Navigasi.FormulirSaya.nama,
-
-            modifier = Modifier.padding(paddingValues = isiRuang)){
-            composable(Navigasi.FormulirSaya.nama){
-                FormIsian (onSubmitBtnClick = { navController.navigate(route = Navigasi.Detail.nama)
-                })
+            navController = navController,
+            startDestination = Navigasi.FormulirSaya.name,
+            modifier = Modifier.padding(paddingValues = isiRuang)
+        ) {
+            composable(route = Navigasi.FormulirSaya.name) {
+                FormIsian(
+                    OnSubmitBtnClick = {
+                        navController.navigate(route = Navigasi.Detail.name)
+                    }
+                )
             }
-            composable(route = Navigasi.Detail.nama){
-                onBackBtnClick = { cancelAndBackToFormulirSaya(navController) }
+            composable(route = Navigasi.Detail.name) {
+                TampilData(
+                    onBackBtnClick = {
+                        cancelAndBackToFormulirSaya(navController)
+                    }
+                )
             }
         }
-
-        }
-        ){
     }
+}
+
+private fun cancelAndBackToFormulirSaya(
+    navController: NavHostController
+) {
+    navController.popBackStack(
+        route = Navigasi.FormulirSaya.name,
+        inclusive = false
+    )
 }
